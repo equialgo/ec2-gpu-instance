@@ -1,9 +1,9 @@
 # ec2-gpu-instance
 Ansible provision scripts for configuration of an Amazon EC2 GPU instance
 
-## AMI
+## Amazon instance and AMI
 
-These provision scripts should be applied to an EC2 GPU instance wih an *Ubuntu Server 14.04 LTS (HVM), SSD Volume Type - ami-47a23a30* machine image.
+These provision scripts should be applied to an EC2 GPU instance configured with an *Ubuntu Server 14.04 LTS (HVM), SSD Volume Type - ami-47a23a30* machine image.
 
 ## Installed software
 
