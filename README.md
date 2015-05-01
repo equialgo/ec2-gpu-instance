@@ -11,3 +11,7 @@ The following software is installed on the instance:
 - *common*; regular packages like java8, git, curl, make, etc.
 - *cuda*; Nvidia drivers, CUDA, CUDNN
 - *tools*; Anaconda, Theano, Caffe
+
+
+## Installing NVIDIA cuDNN
+To allow the installation of the NVIDIA® cuDNN – GPU Accelerated Deep Learning libraries, please add the *cudnn-6.5-linux-x64-v2.tgz* file to the *roles/cuda/files/*-folder.
