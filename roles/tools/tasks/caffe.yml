@@ -35,12 +35,6 @@
   args:
     chdir: /home/{{ ansible_ssh_user }}/caffe
 
-# - name: Build caffe runtest
-#   sudo: False
-#   command: make runtest
-#   args:
-#     chdir: /home/{{ ansible_ssh_user }}/caffe
-
 - name: Build caffe pycaffe
   sudo: False
   command: make pycaffe
