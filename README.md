@@ -8,9 +8,9 @@ These provision scripts should be applied to an EC2 GPU instance configured with
 ## Installed software
 
 The following software is installed on the instance:
-- *common*; regular packages like java8, git, curl, make, etc.
-- *cuda*; Nvidia drivers, CUDA, CUDNN
-- *tools*; Anaconda, Theano, Caffe
+- **common**; regular packages like java8, git, curl, make, etc.
+- **cuda**; Nvidia drivers, CUDA, CUDNN
+- **tools**; Anaconda, Theano, Caffe
 
 
 ## Installing NVIDIA cuDNN
