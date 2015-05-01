@@ -1,0 +1,22 @@
+---
+- name: Blacklist nouveau 
+  kernel_blacklist: name=nouveau state=present
+
+- name: Update system with nouveau disabled
+  shell: update-initramfs -u
+
+- name: Restart instance
+  command: shutdown -r now "Ansible reboot triggered"  
+  async: 0 
+  poll: 0 
+  ignore_errors: true
+
+- name: Wait for instance to restart
+  local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=1 timeout=300
+  sudo: False
+
+- name: Download latest NVIDA GRID K520 drivers
+  get_url: url=http://us.download.nvidia.com/XFree86/Linux-x86_64/346.59/NVIDIA-Linux-x86_64-346.59.run dest=/tmp/driver.run
+
+- name: Install the NVIDIA GRID K520 driver
+  shell: sh /tmp/driver.run -q -a -n -s

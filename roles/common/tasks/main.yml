@@ -1,0 +1,6 @@
+---
+- include: linux.yml
+- include: locale.yml
+- include: utils.yml
+- include: ntp.yml
+- include: java8.yml

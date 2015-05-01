@@ -1,0 +1,74 @@
+---
+- name: Cloning caffe git repo
+  sudo: False
+  git: repo=https://github.com/BVLC/caffe.git dest=/home/{{ ansible_ssh_user }}/caffe
+
+- name: Install python dependencies
+  sudo: False
+  shell: /home/{{ ansible_ssh_user }}/anaconda/bin/pip install {{ item }}
+  with_items: caffe_dependencies
+
+- name: Copy theanorc file to instance
+  copy: src=Makefile.config dest=/home/{{ ansible_ssh_user }}/caffe/Makefile.config owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+
+- name: Add caffe to the PATH
+  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export CAFFE_ROOT=/home/{{ ansible_ssh_user }}/caffe"
+
+- name: Link caffe pycaffe
+  command: "{{item}}"
+  with_items:
+   - ln -fs libhdf5.so.7 libhdf5.so.9
+   - ln -fs libhdf5_hl.so.7 libhdf5_hl.so.9
+   - ldconfig
+  args:
+    chdir: /usr/lib/x86_64-linux-gnu
+
+- name: Build caffe all
+  sudo: False
+  command: make all -j8
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/caffe
+
+- name: Build caffe test
+  sudo: False
+  command: make test -j8
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/caffe
+
+# - name: Build caffe runtest
+#   sudo: False
+#   command: make runtest
+#   args:
+#     chdir: /home/{{ ansible_ssh_user }}/caffe
+
+- name: Build caffe pycaffe
+  sudo: False
+  command: make pycaffe
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/caffe
+
+- name: Build caffe distribute
+  sudo: False
+  command: make distribute
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/caffe
+
+- name: Add pycaffe distribution to the PYTHONPATH
+  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export PYTHONPATH=/home/{{ ansible_ssh_user }}/caffe/distribute/python:$PYTHONPATH"
+
+- name: Add caffe binaries to PATH
+  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export PATH=/home/{{ ansible_ssh_user }}/caffe/build/tools:$PATH"
+
+- name: Add libacaffe to LD_LIBRARY_PATH
+  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/{{ ansible_ssh_user }}/caffe/build/lib"
+
+- name: Restart instance
+  command: shutdown -r now "Ansible reboot triggered"  
+  async: 0 
+  poll: 0 
+  ignore_errors: true
+
+- name: Wait for instance to restart
+  local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=1 timeout=300
+  sudo: False
+

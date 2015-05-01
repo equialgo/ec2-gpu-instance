@@ -1,0 +1,9 @@
+---
+- name: Copy and extract cudnn archive
+  unarchive: src=cudnn-6.5-linux-x64-v2.tgz dest=/tmp
+
+- name: Copy cdnn.h file into cuda include dir
+  shell: cp /tmp/cudnn*/cudnn.h /usr/local/cuda/include
+
+- name: Copy libcudnn* files into cuda lib64 dir
+  shell: cp /tmp/cudnn*/libcudnn* /usr/local/cuda/lib64

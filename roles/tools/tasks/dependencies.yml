@@ -1,0 +1,14 @@
+---
+- name: Install deeplearning dependencies
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items: deeplearning_dependencies
+
+- name: Restart instance
+  command: shutdown -r now "Ansible reboot triggered"  
+  async: 0 
+  poll: 0 
+  ignore_errors: true
+
+- name: Wait for instance to restart
+  local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=1 timeout=300
+  sudo: False

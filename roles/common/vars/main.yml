@@ -1,0 +1,51 @@
+---
+locale_language_packs:
+- language-pack-en
+- language-pack-en-base
+
+locale_locales:
+- { locale: en_US.UTF-8, state: present }
+
+# See:
+# - https://help.ubuntu.com/community/Locale
+# - https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html#The-LANGUAGE-variable
+locale_settings:
+  LANG: "en_US.UTF-8"
+  LANGUAGE: "en_US:"
+
+utils_packages:
+  - build-essential
+  - binutils
+  - g++
+  - curl
+  - debconf
+  - dmidecode
+  - htop
+  - iftop
+  - iotop
+  - pciutils
+  - screen
+  - sysstat
+  - tmux
+  - unzip
+  - vim
+  - wget
+  - git
+  - tree
+  - make
+  - cmake
+  - automake
+  - p7zip-full
+  - unrar-free
+  - bzip2
+  - bc
+  - software-properties-common
+
+ntp_timezone: Europe/Amsterdam
+
+linux_packages:
+  - linux-headers-generic 
+  - linux-headers-virtual 
+  - linux-image-virtual 
+  - linux-virtual
+  - linux-image-extra-virtual

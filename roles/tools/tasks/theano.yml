@@ -1,0 +1,7 @@
+---
+- name: Install latest version of theanorc
+  sudo: False
+  shell: /home/{{ ansible_ssh_user }}/anaconda/bin/pip install --upgrade theano
+
+- name: Copy theanorc file to instance
+  copy: src=theanorc dest=/home/{{ ansible_ssh_user }}/.theanorc owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
