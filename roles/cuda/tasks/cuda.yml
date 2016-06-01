@@ -1,6 +1,6 @@
 ---
 - name: Download latest CUDA drivers
-  get_url: url=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb dest=/tmp/cuda.deb
+  get_url: url=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb dest=/tmp/cuda.deb
 
 - name: Add CUDA deb
   shell: dpkg -i /tmp/cuda.deb
