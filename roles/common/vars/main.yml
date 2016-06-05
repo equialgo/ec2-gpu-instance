@@ -1,10 +1,7 @@
 ---
 locale_language_packs:
-- language-pack-en
-- language-pack-en-base
-
-locale_locales:
-- { locale: en_US.UTF-8, state: present }
+  - language-pack-en
+  - language-pack-en-base
 
 # See:
 # - https://help.ubuntu.com/community/Locale

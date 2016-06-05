@@ -3,8 +3,7 @@
   apt: name=locales state=installed
 
 - name: Ensure language packages are installed
-  apt: pkg={{ item }} state=installed
-  with_items: locale_language_packs
+  apt: pkg={{ locale_language_packs }} state=installed
   register: locale_languages
 
 - name: Ensure dpkg is reconfigured
@@ -41,5 +40,4 @@
   when: not locales_supported.stat.exists
 
 - name: Ensure locales is generated
-  locale_gen: name={{ item.locale }} state={{ item.state }}
-  with_items: locale_locales
+  locale_gen: name={{ locale_settings.LANG }} state=present

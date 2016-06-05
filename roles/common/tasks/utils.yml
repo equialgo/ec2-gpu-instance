@@ -1,6 +1,5 @@
 ---
 - name: Ensure utility packages installed
-  apt: pkg={{ item }} state=installed update_cache=yes
-  with_items: utils_packages
+  apt: pkg={{ utils_packages }} state=installed update_cache=yes
 
 
