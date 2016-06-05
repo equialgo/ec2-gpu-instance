@@ -1,7 +1,8 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
+  become_method: sudo
   roles:
-    - common
-    - cuda
-    - tools
+    - { role: common, tags: common }
+    - { role: cuda, tags: cuda }
+    - { role: tools, tags: tools }

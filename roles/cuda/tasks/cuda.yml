@@ -6,26 +6,30 @@
   shell: dpkg -i /tmp/cuda.deb
 
 - name: Update packages
-  shell: apt-get update
+  apt: update_cache=yes
 
 - name: Install cuda package
-  shell: apt-get install -y cuda
+  apt: name=cuda state=present
 
 - name: Adding cuda bin to PATH
-  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export PATH=$PATH:/usr/local/cuda/bin"
+  lineinfile: dest=~/.bashrc line="export PATH=$PATH:/usr/local/cuda/bin"
+  become: false
 
 - name: Adding cuda lib64 to LD_LIBRARY_PATH
-  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
+  lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
+  become: false
 
 - name: Adding cuda root to CUDA_ROOT
-  lineinfile: dest=/home/{{ ansible_ssh_user }}/.bashrc line="export CUDA_ROOT=/usr/local/cuda"
+  lineinfile: dest=~/.bashrc line="export CUDA_ROOT=/usr/local/cuda"
+  become: false
 
-- name: Restart instance
-  command: shutdown -r now "Ansible reboot triggered"  
-  async: 0 
-  poll: 0 
+- name: Restart server
+  command: /sbin/reboot
+  async: 0
+  poll: 0
   ignore_errors: true
 
-- name: Wait for instance to restart
-  local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=1 timeout=300
-  sudo: False
+- name: Wait for server to restart
+  local_action:
+    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
+  become: false
