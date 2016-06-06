@@ -39,10 +39,3 @@ utils_packages:
   - software-properties-common
 
 ntp_timezone: Europe/Amsterdam
-
-linux_packages:
-  - linux-headers-generic 
-  - linux-headers-virtual 
-  - linux-image-virtual 
-  - linux-virtual
-  - linux-image-extra-virtual

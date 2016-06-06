@@ -21,7 +21,6 @@
     path: /etc/local.gen
   register: locales_gen
 
-
 - name: Create locale gen file
   file:
     path: /etc/local.gen
