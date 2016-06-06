@@ -1,13 +1,13 @@
 ---
-- name: Blacklist nouveau 
+- name: Blacklist processes nouveau 
   kernel_blacklist: name=nouveau state=present
 
 - name: Update system with nouveau disabled
   shell: update-initramfs -u
 
 - name: Restart server
-  command: /sbin/reboot
-  async: 0
+  shell: sleep 2 && /sbin/shutdown -r now
+  async: 1
   poll: 0
   ignore_errors: true
 

@@ -24,8 +24,8 @@
   become: false
 
 - name: Restart server
-  command: /sbin/reboot
-  async: 0
+  shell: sleep 2 && /sbin/shutdown -r now
+  async: 1
   poll: 0
   ignore_errors: true
 
