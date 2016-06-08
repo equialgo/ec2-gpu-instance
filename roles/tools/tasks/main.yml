@@ -1,5 +1,5 @@
 ---
  - include: anaconda.yml
- - include: dependencies.yml
  - include: theano.yml
+ - include: keras.yml
  - include: caffe.yml

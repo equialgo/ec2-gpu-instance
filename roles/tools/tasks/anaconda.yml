@@ -1,16 +1,16 @@
 ---
 - name: Download latest anaconda installer
-  sudo: False
-  get_url: url=https://repo.continuum.io/archive/Anaconda3-4.0.0-Linux-x86_64.sh
+  get_url: url={{ anaconda_installer }}
            dest=/tmp/anaconda.sh
+  become: false
 
 - name: Install anaconda (default folder)
-  sudo: false
   shell: bash /tmp/anaconda.sh -b
+  become: false
 
 - name: Add anaconda to the PATH
-  lineinfile: dest= ~/.bashrc line="export PATH=~/anaconda/bin:$PATH"
-  become: no
+  lineinfile: dest=~/.bashrc line="export PATH=~/anaconda3/bin:$PATH"
+  become: false
 
 - name: Restart server
   shell: sleep 2 && /sbin/shutdown -r now
@@ -24,5 +24,9 @@
   become: false
 
 - name: Update conda to latest version
-  command: ~/anaconda/bin/conda update conda --yes -q
-  become: no
+  command: ~/anaconda3/bin/conda update conda --yes -q
+  become: false
+
+- name: Update anaconda to latest version
+  command: ~/anaconda3/bin/conda update --all --yes -q
+  become: false

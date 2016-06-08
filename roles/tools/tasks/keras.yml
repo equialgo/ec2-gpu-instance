@@ -1,0 +1,9 @@
+---
+
+- name: checkout keras repo
+  git: repo=https://github.com/fchollet/keras.git dest=~/keras update=yes
+  become: false
+
+- name: Install latest version of keras
+  shell: ~/anaconda3/bin/pip install --upgrade -e ~/keras
+  become: false

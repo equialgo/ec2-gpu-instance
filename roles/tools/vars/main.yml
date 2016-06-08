@@ -1,4 +1,7 @@
-deeplearning_dependencies:
+
+anaconda_installer: https://repo.continuum.io/archive/Anaconda3-4.0.0-Linux-x86_64.sh
+
+caffe_dependencies:
 - libopenblas-dev
 - libprotobuf-dev
 - libleveldb-dev
@@ -10,8 +13,3 @@ deeplearning_dependencies:
 - libgoogle-glog-dev
 - liblmdb-dev
 - protobuf-compiler
-
-caffe_dependencies:
-- leveldb
-- protobuf
-- python-gflags

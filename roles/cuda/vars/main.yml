@@ -1,0 +1,5 @@
+---
+
+cuda_deb: http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb
+cuddnn_archive: cudnn-7.5-linux-x64-v5.0-ga.tgz
+nvidia_driver: http://us.download.nvidia.com/XFree86/Linux-x86_64/361.45.11/NVIDIA-Linux-x86_64-361.45.11.run

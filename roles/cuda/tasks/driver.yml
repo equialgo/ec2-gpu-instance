@@ -17,7 +17,7 @@
   become: false
 
 - name: Download latest NVIDA GRID K520 drivers
-  get_url: url=http://us.download.nvidia.com/XFree86/Linux-x86_64/361.45.11/NVIDIA-Linux-x86_64-361.45.11.run dest=/tmp/driver.run
+  get_url: url={{ nvidia_driver }} dest=/tmp/driver.run
 
 - name: Install the NVIDIA GRID K520 driver
   shell: sh /tmp/driver.run -q -a -n -s
