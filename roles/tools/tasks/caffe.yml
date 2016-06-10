@@ -42,6 +42,9 @@
   args:
     chdir: /usr/lib/x86_64-linux-gnu
 
+- name: Fix libdc1394 error
+  file: src=/dev/null dest=/dev/raw1394 state=link
+
 - name: Build caffe all
   command: make all -j8
   args:
