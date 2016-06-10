@@ -1,5 +1,5 @@
 # ec2-gpu-instance
-Ansible provision scripts for configuration of an Amazon EC2 GPU instance
+Ansible provision scripts for configuration of an Amazon EC2 GPU instance.
 
 ## Amazon instance and AMI
 
@@ -10,8 +10,16 @@ These provision scripts should be applied to an EC2 GPU instance configured with
 The following software is installed on the instance:
 - **common**; regular packages like java8, git, curl, make, etc.
 - **cuda**; Nvidia drivers, CUDA, CUDNN
-- **tools**; Anaconda, Theano, Caffe
+- **tools**; Anaconda, Theano, Caffe, Keras
 
+## Running the ansible-playbook
 
-## Installing NVIDIA cuDNN
-To allow the installation of the NVIDIA® cuDNN – GPU Accelerated Deep Learning libraries, please add the *cudnn-7.5-linux-x64-v5.0-ga.tgz* file to the *roles/cuda/files/*-folder.
+To allow the installation of the NVIDIA® cuDNN – GPU Accelerated Deep Learning libraries, please download the binaries from https://developer.nvidia.com/cudnn.
+
+Perform the following steps to successfully install the instance using the ansible playbook:
+
+1. Make sure ansible is installed (preferably in python 2 environment do `pip install ansible`).
+2. Add the *cudnn-7.5-linux-x64-v5.0-ga.tgz* file to the *roles/cuda/files/*-folder.
+3. Add the public ip or dns of the instance to the hosts file.
+4. Add the path of the pem key file to the ansible.cfg file.
+5. Run the playbook from the root of this repository by executing: `ansible-playbook gpu-instance.yml`.
