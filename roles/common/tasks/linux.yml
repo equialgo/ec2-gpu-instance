@@ -1,10 +1,6 @@
 ---
 - apt: upgrade=dist update_cache=yes
 
-# http://tleyden.github.io/blog/2014/10/25/cuda-6-dot-5-on-aws-gpu-instance-running-ubuntu-14-dot-04/
-- name: Install linux packages
-  apt: pkg=linux-image-extra-virtual state=installed
-
 - name: Restart server
   shell: sleep 2 && /sbin/shutdown -r now
   async: 1

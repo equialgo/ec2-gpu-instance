@@ -4,5 +4,5 @@
   become_method: sudo
   roles:
     - { role: common, tags: common }
-    - { role: cuda, tags: cuda }
+    - { role: gpu, tags: gpu }
     - { role: tools, tags: tools }
