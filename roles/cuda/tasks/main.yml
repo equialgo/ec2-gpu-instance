@@ -1,4 +1,4 @@
 ---
-- include: driver.yml
-- include: cuda.yml
-- include: cudnn.yml
+- { include: driver.yml, tags: driver }
+- { include: cuda.yml, tags: cuda }
+- { include: cudnn.yml, tags: cudnn }

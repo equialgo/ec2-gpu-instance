@@ -1,6 +1,6 @@
 ---
-- include: linux.yml
-- include: locale.yml
-- include: utils.yml
-- include: ntp.yml
-- include: java8.yml
+- { include: linux.yml, tags: linux }
+- { include: locale.yml, tags: locale }
+- { include: utils.yml, tags: utils }
+- { include: ntp.yml, tags: ntp }
+- { include: java8.yml, tags: java8 }
