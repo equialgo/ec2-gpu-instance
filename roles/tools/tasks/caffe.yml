@@ -74,7 +74,7 @@
   lineinfile: dest=~/.bashrc line="export PATH=~/caffe/build/tools:$PATH"
   become: false
 
-- name: Add libacaffe to LD_LIBRARY_PATH
+- name: Add lib to LD_LIBRARY_PATH
   lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/caffe/build/lib"
   become: false
 
