@@ -10,7 +10,7 @@ These provision scripts should be applied to an EC2 GPU instance configured with
 The following software is installed on the instance:
 - **common**; regular packages like java8, git, curl, make, etc.
 - **cuda**; Nvidia drivers, CUDA, CUDNN
-- **tools**; Anaconda, Theano, Caffe, Keras
+- **tools**; Anaconda (python 3), Theano, Caffe, Keras
 
 ## Running the ansible-playbook
 
