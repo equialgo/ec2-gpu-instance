@@ -75,7 +75,7 @@
   become: false
 
 - name: Add lib to LD_LIBRARY_PATH
-  lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/caffe/build/lib"
+  lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/caffe/build/lib:~/anaconda3/lib"
   become: false
 
 - name: Restart server
