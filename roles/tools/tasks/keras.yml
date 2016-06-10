@@ -5,5 +5,5 @@
   become: false
 
 - name: Install latest version of keras
-  shell: ~/anaconda3/bin/pip install --upgrade -e ~/keras
+  shell: ~/anaconda2/bin/pip install --upgrade -e ~/keras
   become: false

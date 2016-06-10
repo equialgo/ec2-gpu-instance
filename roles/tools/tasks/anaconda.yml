@@ -9,7 +9,7 @@
   become: false
 
 - name: Add anaconda to the PATH
-  lineinfile: dest=~/.bashrc line="export PATH=~/anaconda3/bin:$PATH"
+  lineinfile: dest=~/.bashrc line="export PATH=~/anaconda2/bin:$PATH"
   become: false
 
 - name: Restart server
@@ -21,12 +21,4 @@
 - name: Wait for server to restart
   local_action:
     module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
-  become: false
-
-- name: Update conda to latest version
-  command: ~/anaconda3/bin/conda update conda --yes -q
-  become: false
-
-- name: Update anaconda to latest version
-  command: ~/anaconda3/bin/conda update --all --yes -q
   become: false

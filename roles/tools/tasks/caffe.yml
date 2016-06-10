@@ -18,14 +18,14 @@
   become: false
 
 - name: Install python dependencies
-  shell: ~/anaconda3/bin/pip install {{ item }}
+  shell: ~/anaconda2/bin/pip install {{ item }}
   with_items:
     - leveldb
     - protobuf
     - python-gflags
   become: false
 
-- name: Copy theanorc file to instance
+- name: Copy Makefile.config file to instance
   copy: src=Makefile.config dest=~/caffe/Makefile.config
   become: false
 
@@ -33,7 +33,7 @@
   lineinfile: dest=~/.bashrc line="export CAFFE_ROOT=~/caffe"
   become: false
 
-- name: Link caffe pycaffe
+- name: Link libhdf5
   command: "{{item}}"
   with_items:
    - ln -fs libhdf5.so.7 libhdf5.so.9
@@ -44,12 +44,6 @@
 
 - name: Build caffe all
   command: make all -j8
-  args:
-    chdir: ~/caffe
-  become: false
-
-- name: Build caffe test
-  command: make test -j8
   args:
     chdir: ~/caffe
   become: false
@@ -75,7 +69,7 @@
   become: false
 
 - name: Add lib to LD_LIBRARY_PATH
-  lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/caffe/build/lib:~/anaconda3/lib"
+  lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/caffe/build/lib:~/anaconda2/lib"
   become: false
 
 - name: Restart server
