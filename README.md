@@ -18,7 +18,7 @@ To allow the installation of the NVIDIA® cuDNN – GPU Accelerated Deep Learnin
 
 Perform the following steps to successfully install the instance using the ansible playbook:
 
-1. Make sure ansible is installed (preferably in python 2 environment, if not install with `pip install ansible`).
+1. Make sure ansible is installed (preferably in python 2 environment, if not install using `pip install ansible`).
 2. Add the cudnn-7.5-linux-x64-v5.0-ga.tgz file to the roles/cuda/files/-folder.
 3. Add the public ip or dns of the instance to the hosts file.
 4. Add the path of the pem key file to the ansible.cfg file.
