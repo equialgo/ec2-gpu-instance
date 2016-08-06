@@ -1,0 +1,27 @@
+---
+
+- name: Copy jupyter notebook config file to instance
+  copy: src=jupyter_notebook_config.py dest=~/.jupyter/
+  become: false
+
+- name: Create cerificate and key
+  shell: openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout ~/.jupyter/mykey.key -out ~/.jupyter/mycert.pem -subj "/C=NL"
+  become: false
+
+- name: Add upstart script to /etc/init
+  copy: src=notebook.conf dest=/etc/init
+
+- name: link sh to bash
+  file: path=/bin/sh src=/bin/bash state=link force=yes
+  become: true
+
+- name: Restart server
+  shell: sleep 2 && /sbin/shutdown -r now
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: Wait for server to restart
+  local_action:
+    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
+  become: false
