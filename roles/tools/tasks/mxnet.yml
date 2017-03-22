@@ -24,6 +24,9 @@
     - libopencv-dev
     - graphviz
 
+- name: Killing libdc1394 warning
+  shell: ln /dev/null /dev/raw1394
+
 - name: Make MXNet
   shell: make -j$(nproc) chdir=~/mxnet/
   become: false
