@@ -38,4 +38,4 @@ utils_packages:
   - bc
   - software-properties-common
 
-ntp_timezone: Europe/Amsterdam
+ntp_timezone: Etc/UTC

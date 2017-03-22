@@ -20,8 +20,8 @@
     module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
   become: false
 
-- name: Download latest NVIDA GRID K520 drivers
+- name: Download latest NVIDA drivers
   get_url: url={{ nvidia_driver }} dest=/tmp/driver.run
 
-- name: Install the NVIDIA GRID K520 driver
+- name: Install the NVIDIA driver
   shell: sh /tmp/driver.run -q -a -n -s

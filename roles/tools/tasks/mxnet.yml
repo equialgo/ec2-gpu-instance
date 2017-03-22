@@ -1,0 +1,32 @@
+---
+- name: Checkout MXNet repo
+  git: repo=https://github.com/dmlc/mxnet.git dest=~/mxnet update=yes
+  become: false
+
+- name: Copy config.mk
+  shell: cp ~/mxnet/make/config.mk ~/mxnet
+  become: false
+
+- name: Update config.mk
+  blockinfile:
+    dest: ~/mxnet/config.mk
+    block: |
+      USE_CUDA=1
+      USE_CUDA_PATH=/usr/local/cuda
+      USE_CUDNN=1
+  become: false
+
+- name: Install MXNet
+  shell: bash install-mxnet-ubuntu-python.sh chdir=~/mxnet/setup-utils
+  become: false
+
+- name: Restart server
+  shell: sleep 2 && /sbin/shutdown -r now
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: Wait for server to restart
+  local_action:
+    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
+  become: false
