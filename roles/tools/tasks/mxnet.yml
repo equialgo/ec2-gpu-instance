@@ -16,17 +16,22 @@
       USE_CUDNN=1
   become: false
 
-- name: Install MXNet
-  shell: bash install-mxnet-ubuntu-python.sh chdir=~/mxnet/setup-utils
+- name: Ensure MXNet dependencies are installed
+  apt: name={{ item }} state=installed
+  with_items:
+    - build-essential
+    - libatlas-base-dev
+    - libopencv-dev
+    - graphviz
+
+- name: Make MXNet
+  shell: make -j$(nproc) chdir=~/mxnet/
   become: false
 
-- name: Restart server
-  shell: sleep 2 && /sbin/shutdown -r now
-  async: 1
-  poll: 0
-  ignore_errors: true
+- name: Install graphviz
+  shell: ~/anaconda2/bin/pip install --upgrade graphviz
+  become: false
 
-- name: Wait for server to restart
-  local_action:
-    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
+- name: Install MXNet python package
+  shell: ~/anaconda2/bin/python setup.py install chdir=~/mxnet/python
   become: false

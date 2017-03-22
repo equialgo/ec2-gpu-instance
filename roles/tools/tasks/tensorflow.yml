@@ -2,3 +2,7 @@
 - name: Install tensorflow with GPU support for python 2.7
   shell: ~/anaconda2/bin/pip install --upgrade tensorflow-gpu
   become: false
+
+- name: Install tensorboard
+  shell: ~/anaconda2/bin/pip install tensorboard
+  become: false
