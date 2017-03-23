@@ -1,30 +1,41 @@
 ---
-- name: Download latest anaconda installer
+- name: Download anaconda installer
   get_url: url={{ anaconda_installer }}
            dest=/tmp/anaconda.sh
+
+- name: Check if anaconda is installed
+  stat:
+    path: ~/anaconda2
+  register: installed
   become: false
 
 - name: Install anaconda (default folder)
   shell: bash /tmp/anaconda.sh -b
   become: false
+  when: installed.stat.exists == False
 
 - name: Add anaconda to the PATH
   lineinfile: dest=~/.bashrc line="export PATH=~/anaconda2/bin:$PATH"
   become: false
+  when: installed.stat.exists == False
 
 - name: Restart server
   shell: sleep 2 && /sbin/shutdown -r now
   async: 1
   poll: 0
   ignore_errors: true
+  when: installed.stat.exists == False
 
 - name: Wait for server to restart
   local_action:
     module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
   become: false
+  when: installed.stat.exists == False
 
 - name: Update conda 
   shell: ~/anaconda2/bin/conda update conda -y --force
+  become: false
 
 - name: Update anaconda 
-  shell: ~/anaconda2/bin/conda install anaconda -y
+  shell: ~/anaconda2/bin/conda update anaconda -y --force
+  become: false
