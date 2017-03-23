@@ -23,3 +23,10 @@ Perform the following steps to successfully install the instance using the ansib
 3. Add the public ip or dns of the instance to the hosts file.
 4. Add the path of the pem key file to the ansible.cfg file.
 5. Run the playbook from the root of this repository by executing: `ansible-playbook gpu-instance.yml`.
+
+## Accessing the Jupyter notebook
+
+Jupyter notebook is by default installed and started during startup of the VM:
+1. Make sure you setup the security group such that port 9999 is exposed to you local ip.
+2. Open your browser and got to the following url **https://public_ip:9999**
+3. Ignore the ssl certificate warning and login with the default password *accelerator*
