@@ -25,3 +25,4 @@ caffe2_dependencies:
 - openmpi-bin
 - openmpi-doc
 - python-pydot
+- libgflags2
