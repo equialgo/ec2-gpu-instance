@@ -13,3 +13,15 @@ caffe_dependencies:
 - libgoogle-glog-dev
 - liblmdb-dev
 - protobuf-compiler
+
+caffe2_dependencies:
+- libgtest-dev
+- libiomp-dev     
+- libleveldb-dev
+- liblmdb-dev
+- libopencv-dev
+- libopenmpi-dev
+- libsnappy-dev
+- openmpi-bin
+- openmpi-doc
+- python-pydot
