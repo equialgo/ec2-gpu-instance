@@ -26,3 +26,4 @@ caffe2_dependencies:
 - openmpi-doc
 - python-pydot
 - libgflags2
+- libhdf5-serial-dev
