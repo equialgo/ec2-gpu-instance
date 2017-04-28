@@ -1,8 +1,8 @@
 ---
  - { include: anaconda.yml, tags: anaconda }
- - { include: tensorflow.yml, tags: tensorflow }
- - { include: mxnet.yml, tags: mxnet }
- - { include: keras.yml, tags: keras }
  - { include: notebook.yml, tags: notebook }
+ - { include: tensorflow.yml, tags: tensorflow }
+ - { include: keras.yml, tags: keras }
  - { include: theano.yml, tags: theano}
+ - { include: mxnet.yml, tags: mxnet }
  #- { include: caffe2.yml, tags: caffe2 }
