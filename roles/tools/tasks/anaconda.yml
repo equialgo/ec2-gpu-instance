@@ -1,41 +1,60 @@
 ---
-- name: Download anaconda installer
-  get_url: url={{ anaconda_installer }}
-           dest=/tmp/anaconda.sh
+- name: Download miniconda installer
+  get_url: url={{ miniconda_installer }}
+           dest=/tmp/miniconda.sh
 
-- name: Check if anaconda is installed
+- name: Check if miniconda is installed
   stat:
-    path: ~/anaconda2
+    path: ~/miniconda
   register: installed
   become: false
 
-- name: Install anaconda (default folder)
-  shell: bash /tmp/anaconda.sh -b
+- name: Install miniconda (default folder)
+  shell: bash /tmp/miniconda.sh -b -p $HOME/miniconda
   become: false
   when: installed.stat.exists == False
 
-- name: Add anaconda to the PATH
-  lineinfile: dest=~/.bashrc line="export PATH=~/anaconda2/bin:$PATH"
-  become: false
-  when: installed.stat.exists == False
-
-- name: Restart server
-  shell: sleep 2 && /sbin/shutdown -r now
-  async: 1
-  poll: 0
-  ignore_errors: true
-  when: installed.stat.exists == False
-
-- name: Wait for server to restart
-  local_action:
-    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
+- name: Add miniconda to the PATH
+  lineinfile: dest=~/.bashrc line="export PATH=~/miniconda/bin:$PATH"
   become: false
   when: installed.stat.exists == False
 
 - name: Update conda 
-  shell: ~/anaconda2/bin/conda update conda -y --force
+  shell: ~/miniconda/bin/conda update conda -y --force
   become: false
 
-- name: Update anaconda 
-  shell: ~/anaconda2/bin/conda update anaconda -y --force
+- name: Check if anaconda35 env is installed
+  stat:
+    path: ~/miniconda/envs/anaconda35
+  register: anaconda35
   become: false
+
+- name: Create anaconda python 3.5 env
+  shell: ~/miniconda/bin/conda create -y -n anaconda35 python=3.5 anaconda
+  become: false
+  when: anaconda35.stat.exists == False
+
+- name: Upgrating setuptools
+  shell: /usr/bin/yes | ~/miniconda/envs/anaconda35/bin/pip install -q --upgrade setuptools
+  ignore_errors: yes
+  become: false
+  when: anaconda35.stat.exists == False
+
+- name: By default activate anaconda35 env
+  lineinfile: dest=~/.bashrc line="source activate anaconda35"
+  become: false
+  when: anaconda35.stat.exists == False
+
+- name: Check if anaconda27 env is installed
+  stat:
+    path: ~/miniconda/envs/anaconda27
+  register: anaconda27
+  become: false
+
+- name: Create anaconda python 2.7 env
+  shell: ~/miniconda/bin/conda create -y -n anaconda27 python=2.7 anaconda
+  become: false
+  when: anaconda27.stat.exists == False
+
+
+

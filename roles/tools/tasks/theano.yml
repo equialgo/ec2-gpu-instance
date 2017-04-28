@@ -1,6 +1,6 @@
 ---
 - name: Install latest version of theanorc
-  shell: ~/anaconda2/bin/pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
+  shell: ~/miniconda/envs/anaconda35/bin/pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
   become: false
 
 - name: Copy theanorc file to instance

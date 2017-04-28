@@ -24,17 +24,14 @@
     - libopencv-dev
     - graphviz
 
-- name: Killing libdc1394 warning
-  shell: ln /dev/null /dev/raw1394
-
 - name: Make MXNet
   shell: make -j$(nproc) chdir=~/mxnet/
   become: false
 
 - name: Install graphviz
-  shell: ~/anaconda2/bin/pip install --upgrade graphviz
+  shell: ~/miniconda/envs/anaconda35/bin/pip install --upgrade graphviz
   become: false
 
 - name: Install MXNet python package
-  shell: ~/anaconda2/bin/python setup.py install chdir=~/mxnet/python
+  shell: ~/miniconda/envs/anaconda35/bin/python setup.py install chdir=~/mxnet/python
   become: false

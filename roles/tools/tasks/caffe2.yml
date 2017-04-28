@@ -1,27 +1,17 @@
 ---
 - name: Install caffe2 dependencies
-  apt: pkg={{ caffe2_dependencies }} 
-  state: installed 
-  update_cache: yes
-  install_recommends: no
-
-- name: Restart server
-  shell: sleep 2 && /sbin/shutdown -r now
-  async: 1
-  poll: 0
-  ignore_errors: true
-
-- name: Wait for server to restart
-  local_action:
-    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
-  become: false
+  apt: 
+    pkg: '{{ caffe2_dependencies }}'
+    state: installed
+    update_cache: yes
+    install_recommends: no
 
 - name: Cloning caffe2 git repo
   git: repo=https://github.com/caffe2/caffe2.git dest=~/caffe2
   become: false
 
 - name: Install python dependencies
-  shell: ~/anaconda2/bin/pip install {{ item }}
+  shell: ~/miniconda/envs/anaconda27/bin/pip install {{ item }}
   with_items:
     - protobuf
     - pydot python-nvd3
@@ -29,50 +19,22 @@
     - hypothesis
   become: false
 
-- name: Link libhdf5
-  command: "{{item}}"
-  with_items:
-   - ln -fs libhdf5.so.7 libhdf5.so.9
-   - ln -fs libhdf5_hl.so.7 libhdf5_hl.so.9
-   - ldconfig
-  args:
-    chdir: /usr/lib/x86_64-linux-gnu
-
-- name: Fix libdc1394 error
-  file: src=/dev/null dest=/dev/raw1394 state=link
+- name: Symlink anaconda27
+  file: 
+    src: /home/ubuntu/miniconda/envs/anaconda27/bin/python
+    dest: /usr/bin/python 
+    state: link
 
 - name: Build caffe
-  command: make -j8
-  args:
-    chdir: ~/caffe2
+  shell: make -j$(nproc) chdir=~/caffe2/
   become: false
 
 - name: Install caffe2
-  command: make install
-  args:
-    chdir: ~/caffe2
-  become: false
+  shell: make install chdir=~/caffe2/build/
 
-- name: Add pycaffe2 distribution to the PYTHONPATH
-  lineinfile: dest=~/.bashrc line="export PYTHONPATH=~/caffe2/build:$PYTHONPATH"
-  become: false
-  
-- name: Add usr local to PYPATH
-  lineinfile: dest=~/.bashrc line="export PYTHONPATH=/usr/local:$PYTHONPATH"
-  become: false
-
-- name: Add lib to LD_LIBRARY_PATH
-  lineinfile: dest=~/.bashrc line="export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH"
-  become: false
-
-- name: Restart server
-  shell: sleep 2 && /sbin/shutdown -r now
-  async: 1
-  poll: 0
-  ignore_errors: true
-
-- name: Wait for server to restart
-  local_action:
-    module: wait_for host={{ inventory_hostname }} delay=30 timeout=120 state=started
-  become: false
+- name: reverting symlink
+  file: 
+    src: /usr/bin/python2.7
+    dest: /usr/bin/python 
+    state: link
 

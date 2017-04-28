@@ -1,4 +1,11 @@
 ---
+- name: Install nb_conda
+  command: ~/miniconda/bin/conda install -y jupyter nb_conda -c conda-forge
+  become: false
+
+- name: Enable conda kernels
+  command: ~/miniconda/bin/python -m nb_conda_kernels.install --enable
+  become: false
 
 - name: Copy jupyter notebook config file to instance
   copy: src=jupyter_notebook_config.py dest=~/.jupyter/

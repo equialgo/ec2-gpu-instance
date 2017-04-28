@@ -1,9 +1,8 @@
 ---
-- name: Install tensorflow with GPU support for python 2.7
-  shell: ~/anaconda2/bin/pip install --upgrade tensorflow-gpu
-  retries: 2
+- name: Install tensorflow with GPU support
+  shell: ~/miniconda/envs/anaconda35/bin/pip install --upgrade tensorflow-gpu
   become: false
 
 - name: Install tensorboard
-  shell: ~/anaconda2/bin/pip install tensorboard
+  shell: ~/miniconda/envs/anaconda35/bin/pip install tensorboard
   become: false

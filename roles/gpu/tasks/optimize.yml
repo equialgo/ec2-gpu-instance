@@ -8,3 +8,9 @@
 
 - name: Set all GPU clock speeds to their maximum frequency.
   shell: nvidia-smi -ac 2505,875
+
+- name: Killing libdc1394 warning
+  file: 
+  	src: /dev/null 
+  	dest: /dev/raw1394 
+  	state: link
